@@ -3,7 +3,7 @@ from PIL import Image, ImageTk #работа с картинками
 import requests
 from io import BytesIO #работа с двоичной системой
 
-from pygame.display import update
+
 
 
 #создаем функцию
@@ -23,11 +23,13 @@ def load_image(url):
 
 #Функция будет делать проверку и установку каждый раз в новом окне
 def open_new_window():
-    img = load_image(url)
+    tag = tag_entry.get()
+    url_tag = f"https://cataas.com/cat/{tag}" if tag else "https://cataas.com/cat"
+    img = load_image(url_tag)
 
     if img:
         #создать окно а внем изображение потом
-        new_window Toplevel()
+        new_window = Toplevel()
         new_window.title('Картинка')
         new_window.geometry('600x480')
         label=Label(new_window, image=img)
@@ -42,6 +44,12 @@ def exit():
 window = Tk()
 window.title('Cats!')
 window.geometry('600x520')
+
+tag_entry = Entry()
+tag_entry.pack()
+
+load_button = Button(text='Загрузить по тегу', command=open_new_window)
+load_button.pack()
 
 #создаем местку. где будет изображение
 # label=Label()

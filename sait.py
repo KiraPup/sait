@@ -3,8 +3,11 @@ from PIL import Image, ImageTk #работа с картинками
 import requests
 from io import BytesIO #работа с двоичной системой
 
+from pygame.display import update
+
+
 #создаем функцию
-def load_imidge():
+def load_image(url):
     try:
         response = requests.get(url) #запрос и то что вернется положим в респонс
         response.raise_for_status() #обработка исключений
@@ -16,6 +19,13 @@ def load_imidge():
         return None #если функуция ничего не вернет
 
 
+#Функция будет делать проверку и установку
+def set_image():
+    img = load_image(url)
+    if img:
+        label.config(image=img)
+        label.image = img
+
 
 window = Tk()
 window.title('Cats!')
@@ -25,13 +35,19 @@ window.geometry('600x480')
 label=Label()
 label.pack()
 
-#адрес из интернета, из которого берем информацию
-url = "https://cataas.com/cat"
-img = load_image(url) #сделать загрузку изображения
+#добавим кнопку, при нажатии , чтоб давала следующую картинку
+update_button = Button(text ='Обновить', command=set_image)#set image функция
+update_button.pack()
+
+# #адрес из интернета, из которого берем информацию
+# url = "https://cataas.com/cat"
+# img = load_image(url) #сделать загрузку изображения
 
 #проверка если не пустая переменная,
 if img:
     label.config(image=img)
     label.image = img #если эту строчку не написать, то комп ее выдаст, а так какмусор удалтит
+
+set_image() #для первой картинке при запуске
 
 window.mainloop()

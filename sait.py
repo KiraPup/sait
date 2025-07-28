@@ -3,6 +3,19 @@ from PIL import Image, ImageTk #работа с картинками
 import requests
 from io import BytesIO #работа с двоичной системой
 
+#создаем функцию
+def load_imidge():
+    try:
+        response = requests.get(url) #запрос и то что вернется положим в респонс
+        response.raise_for_status() #обработка исключений
+        image_data = BytesIO(response.content)#положим обработанное изображение
+        img = Image.open(image_data) #открываем
+        return ImageTk.PhotoImage(img) #это имг положим в нижний имг
+    except Exception as e:
+        print (f'ПРоизошла ошибка {e}')
+        return None #если функуция ничего не вернет
+
+
 
 window = Tk()
 window.title('Cats!')

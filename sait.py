@@ -29,6 +29,10 @@ def set_image():
         label.config(image=img)
         label.image = img
 
+def exit():
+    window.destroy()
+
+
 
 window = Tk()
 window.title('Cats!')
@@ -39,17 +43,30 @@ label=Label()
 label.pack()
 
 #добавим кнопку, при нажатии , чтоб давала следующую картинку
-update_button = Button(text ='Обновить', command=set_image)#set image функция
-update_button.pack()
+# update_button = Button(text ='Обновить', command=set_image)#set image функция
+# update_button.pack()
+
+
+#создадим меню
+menu_bar = menu(window)
+window.config(menu-menu_bar)
+
+file_menu = Menu(menu_bar,tearoff=0)
+menu_bar.add_cascade(label="Файл", menu=file_menu)
+file_menu.add_command(label='Загрузить фото', command=set_image)
+file_menu.add.separator()
+file_menu.add_command(label='Выход',command=exit)
+
+
 
 #адрес из интернета, из которого берем информацию
 url = "https://cataas.com/cat"
-img = load_image(url) #сделать загрузку изображения
+# img = load_image(url) #сделать загрузку изображения
 
-#проверка если не пустая переменная,
-if img:
-    label.config(image=img)
-    label.image = img #если эту строчку не написать, то комп ее выдаст, а так какмусор удалтит
+# #проверка если не пустая переменная,
+# if img:
+#     label.config(image=img)
+#     label.image = img #если эту строчку не написать, то комп ее выдаст, а так какмусор удалтит
 
 set_image() #для первой картинке при запуске
 

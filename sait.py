@@ -2,9 +2,10 @@ from tkinter import *
 from PIL import Image, ImageTk #работа с картинками
 import requests
 from io import BytesIO #работа с двоичной системой
+from tkinter import ttk
 
 
-
+Allowed_tags = ['sleep','jump','fight','black','white','bengal','cute','play']
 
 #создаем функцию
 def load_image(url):
@@ -14,7 +15,7 @@ def load_image(url):
         image_data = BytesIO(response.content)#положим обработанное изображение
         img = Image.open(image_data) #открываем
         #подгоняем под размер окна изображение
-        img.thumbnail(600,480, Image.Resampling.LANCZOS)
+        img.thumbnail((600,480), Image.Resampling.LANCZOS)
         return ImageTk.PhotoImage(img) #это имг положим в нижний имг
     except Exception as e:
         print (f'ПРоизошла ошибка {e}')
@@ -23,7 +24,7 @@ def load_image(url):
 
 #Функция будет делать проверку и установку каждый раз в новом окне
 def open_new_window():
-    tag = tag_entry.get()
+    tag = tag_combobox.get()
     url_tag = f"https://cataas.com/cat/{tag}" if tag else "https://cataas.com/cat"
     img = load_image(url_tag)
 
@@ -38,18 +39,17 @@ def open_new_window():
 
 def exit():
     window.destroy()
-
+    window.destroy()
 
 
 window = Tk()
 window.title('Cats!')
 window.geometry('600x520')
 
-tag_entry = Entry()
-tag_entry.pack()
+# tag_entry = Entry()
+# tag_entry.pack()
 
-load_button = Button(text='Загрузить по тегу', command=open_new_window)
-load_button.pack()
+
 
 #создаем местку. где будет изображение
 # label=Label()
@@ -76,11 +76,23 @@ file_menu.add_command(label='Выход',command=exit)
 url = "https://cataas.com/cat"
 # img = load_image(url) #сделать загрузку изображения
 
+
+#выбираем теш из списка
+tag_label = Label(text='Выбери тег')
+tag_label.pack()
+
+tag_combobox = ttk.Combobox(values=Allowed_tags) #значения-разрешенные теги
+tag_combobox.pack()
+
+load_button = Button(text='Загрузить по тегу', command=open_new_window)
+load_button.pack()
+
+
 # #проверка если не пустая переменная,
 # if img:
 #     label.config(image=img)
 #     label.image = img #если эту строчку не написать, то комп ее выдаст, а так какмусор удалтит
 
-open_new_window() #для первой картинке при запуске
+# open_new_window() #для первой картинке при запуске
 
 window.mainloop()

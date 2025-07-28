@@ -21,12 +21,17 @@ def load_image(url):
         return None #если функуция ничего не вернет
 
 
-#Функция будет делать проверку и установку
-def set_image():
+#Функция будет делать проверку и установку каждый раз в новом окне
+def open_new_window():
     img = load_image(url)
 
     if img:
-        label.config(image=img)
+        #создать окно а внем изображение потом
+        new_window Toplevel()
+        new_window.title('Картинка')
+        new_window.geometry('600x480')
+        label=Label(new_window, image=img)
+        label.pack()
         label.image = img
 
 def exit():
@@ -39,8 +44,8 @@ window.title('Cats!')
 window.geometry('600x520')
 
 #создаем местку. где будет изображение
-label=Label()
-label.pack()
+# label=Label()
+# label.pack()
 
 #добавим кнопку, при нажатии , чтоб давала следующую картинку
 # update_button = Button(text ='Обновить', command=set_image)#set image функция
@@ -48,13 +53,13 @@ label.pack()
 
 
 #создадим меню
-menu_bar = menu(window)
-window.config(menu-menu_bar)
+menu_bar = Menu(window)
+window.config(menu=menu_bar)
 
 file_menu = Menu(menu_bar,tearoff=0)
 menu_bar.add_cascade(label="Файл", menu=file_menu)
-file_menu.add_command(label='Загрузить фото', command=set_image)
-file_menu.add.separator()
+file_menu.add_command(label='Загрузить фото', command=open_new_window)
+file_menu.add_separator()
 file_menu.add_command(label='Выход',command=exit)
 
 
@@ -68,6 +73,6 @@ url = "https://cataas.com/cat"
 #     label.config(image=img)
 #     label.image = img #если эту строчку не написать, то комп ее выдаст, а так какмусор удалтит
 
-set_image() #для первой картинке при запуске
+open_new_window() #для первой картинке при запуске
 
 window.mainloop()

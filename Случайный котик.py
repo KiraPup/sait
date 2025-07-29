@@ -9,6 +9,8 @@ ALLOWED_TAGS = [
     'sleep', 'jump', 'smile', 'fight', 'black', 'white', 'red', 'siamese', 'bengal'
 ]
 
+url = "https://cataas.com/cat"
+
 def load_image(url):
     try:
         response = requests.get(url)
@@ -33,6 +35,17 @@ def open_new_window():
         label.image = img
         label.pack()
 
+def random():
+    img = load_image(url)
+    if img:
+        new_window = Toplevel()
+        new_window.title("Random Cat")
+        new_window.geometry("600x480")
+        label = Label(new_window, image=img)
+        label.image = img
+        label.pack()
+
+
 window = Tk()
 window.title("Cats!")
 window.geometry("600x520")
@@ -53,7 +66,7 @@ tag_label.pack()
 tag_combobox = ttk.Combobox(window, values=ALLOWED_TAGS)
 tag_combobox.pack()
 
-c_button = Button(text='Случайный котик', command=open_new_window)
+c_button = Button(text='Случайный котик', command=random)
 c_button.pack()
 
 
